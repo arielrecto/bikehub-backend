@@ -1,0 +1,74 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Bike Hub Api",
+        "version": "0.1"
+    },
+    "paths": {
+        "/api/login": {
+            "post": {
+                "tags": [
+                    "Authentication"
+                ],
+                "operationId": "cdd44c14b1ad1560492fba76b3e0acaf",
+                "responses": {
+                    "200": {
+                        "description": "This Api use for user authentication that return api token"
+                    }
+                }
+            }
+        },
+        "/api/logout": {
+            "delete": {
+                "tags": [
+                    "Authentication"
+                ],
+                "operationId": "dcb3b457df9601e11a18212836a33282",
+                "responses": {
+                    "200": {
+                        "description": "This Api use for The Authenticated User to logout by revoking the current api token"
+                    }
+                }
+            }
+        },
+        "/api/register": {
+            "post": {
+                "tags": [
+                    "Authentication"
+                ],
+                "operationId": "f25eacdab1284e12b28f83cb2b5a30b9",
+                "responses": {
+                    "200": {
+                        "description": "This Api use for user registration"
+                    }
+                }
+            }
+        },
+        "/api/": {
+            "get": {
+                "tags": [
+                    "Home"
+                ],
+                "operationId": "5672b3cbf24efe31adc956c0557f9aa2",
+                "responses": {
+                    "200": {
+                        "description": "This Api use to get all latest threads with user data"
+                    }
+                }
+            }
+        },
+        "/api/users/threads": {
+            "post": {
+                "tags": [
+                    "Threads"
+                ],
+                "operationId": "57d2c900f35afbf7bad170bb67df8554",
+                "responses": {
+                    "200": {
+                        "description": "This Api use for Post a new Thread"
+                    }
+                }
+            }
+        }
+    }
+}
