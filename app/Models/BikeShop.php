@@ -13,7 +13,6 @@ class BikeShop extends Model
     protected $fillable = [
         'name',
         'description',
-        'address',
         'location',
     ];
 

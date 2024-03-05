@@ -3,6 +3,7 @@
 use App\Http\Controllers\Api\Auth\LoginController;
 use App\Http\Controllers\Api\Auth\RegisterController;
 use App\Http\Controllers\Api\HomeController;
+use App\Http\Controllers\Api\User\BikeShopController;
 use App\Http\Controllers\Api\User\CommentController;
 use App\Http\Controllers\Api\User\ThreadController;
 use Illuminate\Http\Request;
@@ -40,6 +41,7 @@ Route::middleware(['auth:sanctum'])->group(function(){
         });
 
         Route::resource('threads', ThreadController::class)->except(['edit', 'create']);
+        Route::resource('bike/shops', BikeShopController::class)->except(['edit', 'create']);
     });
     Route::delete('/logout', [LoginController::class, 'logout']);
 });
