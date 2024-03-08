@@ -43,7 +43,9 @@ class BikeShopController extends Controller
        ]);
 
 
-       return $bikeShop;
+       return response([
+        'message' => 'Bikeshop Added'
+       ], 200);
     }
 
     /**

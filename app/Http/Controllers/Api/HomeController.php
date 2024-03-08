@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Models\BikeShop;
 use App\Models\Thread;
 use Illuminate\Http\Request;
 
@@ -33,8 +34,12 @@ class HomeController extends Controller
             'user', 'comments.replies'
         ])->latest()->get();
 
+
+        $shops = BikeShop::latest()->get();
+
         return response([
-            'threads' => $threads
+            'threads' => $threads,
+            'shops' => $shops
         ], 200);
     }
 }
