@@ -8,6 +8,16 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 
+/**
+ * @OA\Tag(
+ *     name="Comment",
+ *     description="This is related to the threads"
+ * )
+ *
+ **/
+
+
+
 class CommentController extends Controller
 {
     /**
@@ -29,6 +39,48 @@ class CommentController extends Controller
     /**
      * Store a newly created resource in storage.
      */
+
+
+    /**
+     * @OA\Post(
+     *  path="/api/users/threads/{id}/comment",
+     *     tags={"Threads"},
+     * security={
+     *         {"bearerAuth": {}}
+     *     },
+     *  @OA\Parameter(
+     *         name="id",
+     *         in="path",
+     *         required=true,
+     *         description="ID of the Thread to retrieve",
+     *         @OA\Schema(
+     *             type="integer",
+     *             format="int64"
+     *         )
+     *     ),
+     * @OA\Response(
+     *         response=200,
+     *         description="This API is used to add a comment in the specific thread",
+     *         @OA\JsonContent(
+     *             type="object",
+     *               @OA\Property(
+     *                 property="status",
+     *                 type="string",
+     *                 example="success"
+     *             ),
+     *             @OA\Property(
+     *                 property="message",
+     *                 type="string",
+     *                 example="Comment added successfully"
+     *             )
+     *         )
+     *     )
+     * )
+     *
+     *
+     */
+
+
     public function store(Request $request, $id)
     {
 
@@ -50,7 +102,7 @@ class CommentController extends Controller
         return response([
             'message' => 'Comment Added',
             'comment' => $comment
-        ],200);
+        ], 200);
     }
 
     /**
