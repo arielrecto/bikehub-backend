@@ -58,6 +58,22 @@ class CommentController extends Controller
      *             format="int64"
      *         )
      *     ),
+     * @OA\RequestBody(
+     *         required=true,
+     *         description="Comment content",
+     *         @OA\MediaType(
+     *             mediaType="application/json",
+     *             @OA\Schema(
+     *                 type="object",
+     *                 required={"content"},
+     *                 @OA\Property(
+     *                     property="content",
+     *                     type="string",
+     *                     example="This is the comment content."
+     *                 )
+     *             )
+     *         )
+     *     ),
      * @OA\Response(
      *         response=200,
      *         description="This API is used to add a comment in the specific thread",
