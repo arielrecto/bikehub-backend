@@ -25,4 +25,7 @@ class Thread extends Model
     public function comments(){
         return $this->hasMany(Comment::class);
     }
+    public function tags(){
+        return $this->hasMany(ThreadTag::class)->with(['tag']);
+    }
 }

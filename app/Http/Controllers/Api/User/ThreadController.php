@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api\User;
 
 use App\Http\Controllers\Controller;
 use App\Models\Thread;
+use App\Models\ThreadTag;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -85,8 +86,10 @@ class ThreadController extends Controller
 
         $request->validate([
             'title' => 'required',
-            'content' => 'required'
+            'content' => 'required',
         ]);
+
+        $tags = $request->tags;
 
         $user = Auth::user();
 
@@ -96,8 +99,12 @@ class ThreadController extends Controller
             'user_id' => $user->id
         ]);
 
-
-
+        collect($tags)->map(function($tag) use ($thread){
+            ThreadTag::create([
+                'thread_id' => $thread->id,
+                'tag_id' => $tag->id
+            ]);
+        });
 
         return response([
             'message' => 'Thread Is Added',

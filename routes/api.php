@@ -3,6 +3,7 @@
 use App\Http\Controllers\Api\Auth\LoginController;
 use App\Http\Controllers\Api\Auth\RegisterController;
 use App\Http\Controllers\Api\HomeController;
+use App\Http\Controllers\Api\TagsController;
 use App\Http\Controllers\Api\User\BikeShopController;
 use App\Http\Controllers\Api\User\CommentController;
 use App\Http\Controllers\Api\User\ThreadController;
@@ -39,7 +40,7 @@ Route::middleware(['auth:sanctum'])->group(function(){
             Route::put('/{thread}/comment/{comment}/update', [CommentController::class, 'update']);
             Route::delete('/{thread}/comment/{comment}/delete', [CommentController::class, 'destroy']);
         });
-
+        Route::resource('tags', TagsController::class);
         Route::resource('threads', ThreadController::class)->except(['edit', 'create']);
         Route::resource('bike/shops', BikeShopController::class)->except(['edit', 'create']);
     });
