@@ -1015,19 +1015,98 @@
                         "bearerAuth": []
                     }
                 ]
-            }
-        },
-        "/api/users/threads": {
+            },
             "post": {
                 "tags": [
                     "Threads"
                 ],
-                "operationId": "57d2c900f35afbf7bad170bb67df8554",
+                "summary": "Create a new thread",
+                "description": "Create a new thread with specified title, content, and tags.",
+                "operationId": "7a07a83cc8aba712273dd56b902123f3",
+                "requestBody": {
+                    "description": "Thread data to add",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "title",
+                                    "content",
+                                    "tags"
+                                ],
+                                "properties": {
+                                    "title": {
+                                        "type": "string",
+                                        "example": "Sample Thread Title"
+                                    },
+                                    "content": {
+                                        "type": "string",
+                                        "example": "Sample Thread Content"
+                                    },
+                                    "tags": {
+                                        "description": "List of tag IDs associated with the thread",
+                                        "type": "array",
+                                        "items": {
+                                            "type": "integer",
+                                            "example": "1"
+                                        }
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
                 "responses": {
                     "200": {
-                        "description": "This Api use for Post a new Thread"
+                        "description": "Thread added successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Thread Is Added"
+                                        },
+                                        "thread": {
+                                            "type": "object",
+                                            "example": {
+                                                "id": 1,
+                                                "title": "Sample Thread Title",
+                                                "content": "Sample Thread Content"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "The given data was invalid."
+                                        },
+                                        "errors": {
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
                     }
-                }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
             }
         },
         "/api/threads/{id}": {

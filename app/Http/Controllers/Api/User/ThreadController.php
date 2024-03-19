@@ -71,14 +71,49 @@ class ThreadController extends Controller
      * Store a newly created resource in storage.
      */
 
+
     /**
-     * @OA\POST(
-     *     path="/api/users/threads",
+     * @OA\Post(
+     *     path="/api/threads",
      *     tags={"Threads"},
-     *     @OA\Response(response="200", description="This Api use for Post a new Thread")
+     *     summary="Create a new thread",
+     *     description="Create a new thread with specified title, content, and tags.",
+     *     @OA\RequestBody(
+     *         required=true,
+     *         description="Thread data to add",
+     *         @OA\JsonContent(
+     *             required={"title", "content", "tags"},
+     *             @OA\Property(property="title", type="string", example="Sample Thread Title"),
+     *             @OA\Property(property="content", type="string", example="Sample Thread Content"),
+     *             @OA\Property(
+     *                 property="tags",
+     *                 type="array",
+     *                 @OA\Items(type="integer", example="1"),
+     *                 description="List of tag IDs associated with the thread"
+     *             )
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Thread added successfully",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(property="message", type="string", example="Thread Is Added"),
+     *             @OA\Property(property="thread", type="object", example={"id": 1, "title": "Sample Thread Title", "content": "Sample Thread Content"}),
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=422,
+     *         description="Validation error",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(property="message", type="string", example="The given data was invalid."),
+     *             @OA\Property(property="errors", type="object"),
+     *         )
+     *     ),
+     *     security={{ "bearerAuth":{} }}
      * )
      */
-
 
 
     public function store(Request $request)
@@ -99,7 +134,7 @@ class ThreadController extends Controller
             'user_id' => $user->id
         ]);
 
-        collect($tags)->map(function($tag) use ($thread){
+        collect($tags)->map(function ($tag) use ($thread) {
             ThreadTag::create([
                 'thread_id' => $thread->id,
                 'tag_id' => $tag->id
@@ -132,57 +167,57 @@ class ThreadController extends Controller
      * Update the specified resource in storage.
      */
 
-     /**
- * @OA\Put(
- *     path="/api/threads/{id}",
- *     tags={"Threads"},
- *     summary="Update a thread",
- *     description="Update a thread by its ID.",
- *     @OA\Parameter(
- *         name="id",
- *         in="path",
- *         required=true,
- *         description="ID of the thread to update",
- *         @OA\Schema(
- *             type="string"
- *         )
- *     ),
- *     @OA\RequestBody(
- *         required=true,
- *         description="Thread data to update",
- *         @OA\JsonContent(
- *             required={"title", "content"},
- *             @OA\Property(property="title", type="string", example="New Title"),
- *             @OA\Property(property="content", type="string", example="New Content")
- *         )
- *     ),
- *     @OA\Response(
- *         response=200,
- *         description="Thread data updated",
- *         @OA\JsonContent(
- *             type="object",
- *             @OA\Property(
- *                 property="message",
- *                 type="string",
- *                 example="Thread data updated"
- *             )
- *         )
- *     ),
- *     @OA\Response(
- *         response=404,
- *         description="Thread not found",
- *         @OA\JsonContent(
- *             type="object",
- *             @OA\Property(
- *                 property="message",
- *                 type="string",
- *                 example="Thread not found"
- *             )
- *         )
- *     ),
- *     security={{ "bearerAuth":{} }}
- * )
- */
+    /**
+     * @OA\Put(
+     *     path="/api/threads/{id}",
+     *     tags={"Threads"},
+     *     summary="Update a thread",
+     *     description="Update a thread by its ID.",
+     *     @OA\Parameter(
+     *         name="id",
+     *         in="path",
+     *         required=true,
+     *         description="ID of the thread to update",
+     *         @OA\Schema(
+     *             type="string"
+     *         )
+     *     ),
+     *     @OA\RequestBody(
+     *         required=true,
+     *         description="Thread data to update",
+     *         @OA\JsonContent(
+     *             required={"title", "content"},
+     *             @OA\Property(property="title", type="string", example="New Title"),
+     *             @OA\Property(property="content", type="string", example="New Content")
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Thread data updated",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(
+     *                 property="message",
+     *                 type="string",
+     *                 example="Thread data updated"
+     *             )
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="Thread not found",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(
+     *                 property="message",
+     *                 type="string",
+     *                 example="Thread not found"
+     *             )
+     *         )
+     *     ),
+     *     security={{ "bearerAuth":{} }}
+     * )
+     */
 
     public function update(Request $request, string $id)
     {
