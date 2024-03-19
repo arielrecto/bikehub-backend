@@ -106,14 +106,113 @@
         "/api/index": {
             "get": {
                 "tags": [
-                    "Index"
+                    "Home"
                 ],
                 "summary": "Get all threads and bike shops",
-                "description": "Retrieve all threads and bike shops.",
+                "description": "Retrieve all threads along with associated user, comments, tags, and retrieve all bike shops.",
                 "operationId": "b491f9a3ac1022decb8a03dd854721f8",
                 "responses": {
                     "200": {
-                        "description": "List of threads and bike shops retrieved successfully"
+                        "description": "Threads and bike shops retrieved successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "threads": {
+                                            "description": "List of threads",
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "id": {
+                                                        "type": "integer",
+                                                        "example": 1
+                                                    },
+                                                    "title": {
+                                                        "type": "string",
+                                                        "example": "Sample Thread Title"
+                                                    },
+                                                    "content": {
+                                                        "type": "string",
+                                                        "example": "Sample Thread Content"
+                                                    },
+                                                    "user": {
+                                                        "description": "Details of the user who created the thread",
+                                                        "properties": {
+                                                            "id": {
+                                                                "type": "integer",
+                                                                "example": 1
+                                                            },
+                                                            "name": {
+                                                                "type": "string",
+                                                                "example": "John Doe"
+                                                            }
+                                                        },
+                                                        "type": "object"
+                                                    },
+                                                    "comments": {
+                                                        "description": "List of comments associated with the thread",
+                                                        "type": "array",
+                                                        "items": {
+                                                            "properties": {
+                                                                "id": {
+                                                                    "type": "integer",
+                                                                    "example": 1
+                                                                },
+                                                                "content": {
+                                                                    "type": "string",
+                                                                    "example": "Sample Comment Content"
+                                                                }
+                                                            },
+                                                            "type": "object"
+                                                        }
+                                                    },
+                                                    "tags": {
+                                                        "description": "List of tags associated with the thread",
+                                                        "type": "array",
+                                                        "items": {
+                                                            "properties": {
+                                                                "id": {
+                                                                    "type": "integer",
+                                                                    "example": 1
+                                                                },
+                                                                "name": {
+                                                                    "type": "string",
+                                                                    "example": "Sample Tag Name"
+                                                                }
+                                                            },
+                                                            "type": "object"
+                                                        }
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        },
+                                        "shops": {
+                                            "description": "List of bike shops",
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "id": {
+                                                        "type": "integer",
+                                                        "example": 1
+                                                    },
+                                                    "name": {
+                                                        "type": "string",
+                                                        "example": "Sample Bike Shop Name"
+                                                    },
+                                                    "description": {
+                                                        "type": "string",
+                                                        "example": "Sample Bike Shop Description"
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
                     }
                 },
                 "security": [
