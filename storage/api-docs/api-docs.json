@@ -1002,19 +1002,41 @@
                 "tags": [
                     "Threads"
                 ],
-                "summary": "Get all threads",
-                "description": "Retrieve all threads with pagination.",
+                "summary": "Retrieve paginated list of threads",
+                "description": "Retrieve a paginated list of threads, ordered by the latest.",
                 "operationId": "55e1c4761d15d668ae62c513e5d40ac6",
                 "responses": {
                     "200": {
-                        "description": "List of threads retrieved successfully"
+                        "description": "List of threads retrieved successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "properties": {
+                                            "id": {
+                                                "description": "ID of the thread",
+                                                "type": "integer",
+                                                "example": 1
+                                            },
+                                            "title": {
+                                                "description": "Title of the thread",
+                                                "type": "string",
+                                                "example": "Sample Thread Title"
+                                            },
+                                            "content": {
+                                                "description": "Content of the thread",
+                                                "type": "string",
+                                                "example": "Sample Thread Content"
+                                            }
+                                        },
+                                        "type": "object"
+                                    }
+                                }
+                            }
+                        }
                     }
-                },
-                "security": [
-                    {
-                        "bearerAuth": []
-                    }
-                ]
+                }
             },
             "post": {
                 "tags": [
@@ -1110,6 +1132,112 @@
             }
         },
         "/api/threads/{id}": {
+            "get": {
+                "tags": [
+                    "Threads"
+                ],
+                "summary": "Retrieve a thread by ID",
+                "description": "Retrieve a thread by its ID along with associated tags and comments.",
+                "operationId": "19f3030a50eff557107d7d9f42cb9d08",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of the thread to retrieve",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Thread retrieved successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "thread": {
+                                            "description": "Details of the retrieved thread",
+                                            "properties": {
+                                                "id": {
+                                                    "type": "integer",
+                                                    "example": 1
+                                                },
+                                                "title": {
+                                                    "type": "string",
+                                                    "example": "Sample Thread Title"
+                                                },
+                                                "content": {
+                                                    "type": "string",
+                                                    "example": "Sample Thread Content"
+                                                },
+                                                "comments": {
+                                                    "description": "List of comments associated with the thread",
+                                                    "type": "array",
+                                                    "items": {
+                                                        "properties": {
+                                                            "id": {
+                                                                "type": "integer",
+                                                                "example": 1
+                                                            },
+                                                            "content": {
+                                                                "type": "string",
+                                                                "example": "Sample Comment Content"
+                                                            }
+                                                        },
+                                                        "type": "object"
+                                                    }
+                                                },
+                                                "tags": {
+                                                    "description": "List of tags associated with the thread",
+                                                    "type": "array",
+                                                    "items": {
+                                                        "properties": {
+                                                            "id": {
+                                                                "type": "integer",
+                                                                "example": 1
+                                                            },
+                                                            "name": {
+                                                                "type": "string",
+                                                                "example": "Sample Tag Name"
+                                                            }
+                                                        },
+                                                        "type": "object"
+                                                    }
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Thread not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Thread not found"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
             "put": {
                 "tags": [
                     "Threads"

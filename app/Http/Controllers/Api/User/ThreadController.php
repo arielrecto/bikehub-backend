@@ -18,37 +18,43 @@ class ThreadController extends Controller
      * )
      */
 
-    /**
-     * @OA\Schema(
-     *     schema="Thread",
-     *     title="Thread",
-     *     description="Thread model",
-     *     @OA\Property(
-     *         property="id",
-     *         type="integer",
-     *         example="1",
-     *         description="ID of the thread"
-     *     ),
-     *     @OA\Property(
-     *         property="title",
-     *         type="string",
-     *         example="Sample Thread Title",
-     *         description="Title of the thread"
-     *     )
-     * )
-     */
 
     /**
      * @OA\Get(
      *     path="/api/threads",
      *     tags={"Threads"},
-     *     summary="Get all threads",
-     *     description="Retrieve all threads with pagination.",
+     *     summary="Retrieve paginated list of threads",
+     *     description="Retrieve a paginated list of threads, ordered by the latest.",
      *     @OA\Response(
      *         response=200,
      *         description="List of threads retrieved successfully",
+     *         @OA\JsonContent(
+     *             type="array",
+     *             @OA\Items(
+     *                 type="object",
+     *                 @OA\Property(
+     *                     property="id",
+     *                     type="integer",
+     *                     example=1,
+     *                     description="ID of the thread"
+     *                 ),
+     *                 @OA\Property(
+     *                     property="title",
+     *                     type="string",
+     *                     example="Sample Thread Title",
+     *                     description="Title of the thread"
+     *                 ),
+     *                 @OA\Property(
+     *                     property="content",
+     *                     type="string",
+     *                     example="Sample Thread Content",
+     *                     description="Content of the thread"
+     *                 ),
+     *
+     *             )
+     *         )
      *     ),
-     *     security={{ "bearerAuth":{} }}
+     *
      * )
      */
     public function index()
@@ -150,9 +156,81 @@ class ThreadController extends Controller
     /**
      * Display the specified resource.
      */
+
+    /**
+     * @OA\Get(
+     *     path="/api/threads/{id}",
+     *     tags={"Threads"},
+     *     summary="Retrieve a thread by ID",
+     *     description="Retrieve a thread by its ID along with associated tags and comments.",
+     *     @OA\Parameter(
+     *         name="id",
+     *         in="path",
+     *         required=true,
+     *         description="ID of the thread to retrieve",
+     *         @OA\Schema(type="string")
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Thread retrieved successfully",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(
+     *                 property="thread",
+     *                 type="object",
+     *                 description="Details of the retrieved thread",
+     *                 @OA\Property(property="id", type="integer", example=1),
+     *                 @OA\Property(property="title", type="string", example="Sample Thread Title"),
+     *                 @OA\Property(property="content", type="string", example="Sample Thread Content"),
+     *                 @OA\Property(
+     *                     property="comments",
+     *                     type="array",
+     *                     description="List of comments associated with the thread",
+     *                     @OA\Items(
+     *                         type="object",
+     *                         @OA\Property(property="id", type="integer", example=1),
+     *                         @OA\Property(property="content", type="string", example="Sample Comment Content")
+     *
+     *                     )
+     *                 ),
+     *                 @OA\Property(
+     *                     property="tags",
+     *                     type="array",
+     *                     description="List of tags associated with the thread",
+     *                     @OA\Items(
+     *                         type="object",
+     *                         @OA\Property(property="id", type="integer", example=1),
+     *                         @OA\Property(property="name", type="string", example="Sample Tag Name")
+     *
+     *                     )
+     *                 ),
+     *             )
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="Thread not found",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(
+     *                 property="message",
+     *                 type="string",
+     *                 example="Thread not found"
+     *             )
+     *         )
+     *     ),
+     *     security={{ "bearerAuth":{} }}
+     * )
+     */
     public function show(string $id)
     {
-        //
+        $thread  = Thread::where('id', $id)->where(['tags', 'comments'])->first();
+
+
+
+        return response([
+            'thread' => $thread
+        ], 200);
     }
 
     /**
