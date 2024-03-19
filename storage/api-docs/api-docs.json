@@ -103,85 +103,22 @@
                 }
             }
         },
-        "/api/": {
+        "/api/index": {
             "get": {
                 "tags": [
-                    "Home"
+                    "Index"
                 ],
-                "summary": "Get all latest threads with user data",
-                "description": "API endpoint to retrieve all latest threads along with associated user data.",
-                "operationId": "5672b3cbf24efe31adc956c0557f9aa2",
+                "summary": "Get all threads and bike shops",
+                "description": "Retrieve all threads and bike shops.",
+                "operationId": "b491f9a3ac1022decb8a03dd854721f8",
                 "responses": {
                     "200": {
-                        "description": "Latest threads with user data",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "properties": {
-                                        "threads": {
-                                            "description": "List of latest threads",
-                                            "type": "array",
-                                            "items": {
-                                                "properties": {
-                                                    "thread_id": {
-                                                        "description": "ID of the thread",
-                                                        "type": "integer",
-                                                        "example": "1"
-                                                    },
-                                                    "thread_title": {
-                                                        "description": "Title of the thread",
-                                                        "type": "string",
-                                                        "example": "Sample Thread Title"
-                                                    }
-                                                },
-                                                "type": "object"
-                                            }
-                                        },
-                                        "users": {
-                                            "description": "List of users associated with the threads",
-                                            "type": "array",
-                                            "items": {
-                                                "properties": {
-                                                    "user_id": {
-                                                        "description": "ID of the user",
-                                                        "type": "integer",
-                                                        "example": "1"
-                                                    },
-                                                    "username": {
-                                                        "description": "Username of the user",
-                                                        "type": "string",
-                                                        "example": "sample_user"
-                                                    }
-                                                },
-                                                "type": "object"
-                                            }
-                                        }
-                                    },
-                                    "type": "object"
-                                }
-                            }
-                        }
-                    },
-                    "401": {
-                        "description": "Unauthorized",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "properties": {
-                                        "message": {
-                                            "type": "string",
-                                            "example": "Unauthorized access. Please provide a valid bearer token."
-                                        }
-                                    },
-                                    "type": "object"
-                                }
-                            }
-                        }
+                        "description": "List of threads and bike shops retrieved successfully"
                     }
                 },
                 "security": [
                     {
-                        "bearerAuth ": []
+                        "bearerAuth": []
                     }
                 ]
             }
@@ -253,6 +190,26 @@
                 ]
             }
         },
+        "/api/threads": {
+            "get": {
+                "tags": [
+                    "Threads"
+                ],
+                "summary": "Get all threads",
+                "description": "Retrieve all threads with pagination.",
+                "operationId": "55e1c4761d15d668ae62c513e5d40ac6",
+                "responses": {
+                    "200": {
+                        "description": "List of threads retrieved successfully"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
         "/api/users/threads": {
             "post": {
                 "tags": [
@@ -264,6 +221,149 @@
                         "description": "This Api use for Post a new Thread"
                     }
                 }
+            }
+        },
+        "/api/threads/{id}": {
+            "put": {
+                "tags": [
+                    "Threads"
+                ],
+                "summary": "Update a thread",
+                "description": "Update a thread by its ID.",
+                "operationId": "b2c82963e6af11bdda96544891866d46",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of the thread to update",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "description": "Thread data to update",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "title",
+                                    "content"
+                                ],
+                                "properties": {
+                                    "title": {
+                                        "type": "string",
+                                        "example": "New Title"
+                                    },
+                                    "content": {
+                                        "type": "string",
+                                        "example": "New Content"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Thread data updated",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Thread data updated"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Thread not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Thread not found"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "delete": {
+                "tags": [
+                    "Threads"
+                ],
+                "summary": "Delete a thread",
+                "description": "Delete a thread by its ID.",
+                "operationId": "f0bb440f46fd25adaa14f903454926a2",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of the thread to delete",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Thread successfully deleted",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Thread successfully deleted"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Thread not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Thread not found"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
             }
         }
     },
