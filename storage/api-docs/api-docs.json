@@ -395,6 +395,390 @@
                 ]
             }
         },
+        "/api/bike-shops": {
+            "get": {
+                "tags": [
+                    "BikeShops"
+                ],
+                "summary": "Get all bike shops",
+                "description": "Retrieve all bike shops.",
+                "operationId": "fcfe7888326a9b639f3acb54231f7cd4",
+                "responses": {
+                    "200": {
+                        "description": "List of bike shops retrieved successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "bike_shop": {
+                                            "description": "List of bike shops",
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "id": {
+                                                        "description": "ID of the bike shop",
+                                                        "type": "integer",
+                                                        "example": "1"
+                                                    },
+                                                    "name": {
+                                                        "description": "Name of the bike shop",
+                                                        "type": "string",
+                                                        "example": "Sample Bike Shop"
+                                                    },
+                                                    "description": {
+                                                        "description": "Description of the bike shop",
+                                                        "type": "string",
+                                                        "example": "A description of the bike shop"
+                                                    },
+                                                    "location": {
+                                                        "description": "Location of the bike shop",
+                                                        "type": "object",
+                                                        "example": {
+                                                            "lat": 123.456,
+                                                            "long": 78.9
+                                                        }
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "BikeShops"
+                ],
+                "summary": "Create a new bike shop",
+                "description": "Create a new bike shop.",
+                "operationId": "2e5f1fd5e38d4f3dbdebf7241a101a90",
+                "requestBody": {
+                    "description": "Bike shop data to add",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "name",
+                                    "description",
+                                    "location"
+                                ],
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "example": "Sample Bike Shop"
+                                    },
+                                    "description": {
+                                        "type": "string",
+                                        "example": "A description of the bike shop"
+                                    },
+                                    "location": {
+                                        "type": "object",
+                                        "example": {
+                                            "lat": 123.456,
+                                            "long": 78.9
+                                        }
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Bike shop added successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Bikeshop Added"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "The given data was invalid."
+                                        },
+                                        "errors": {
+                                            "type": "object",
+                                            "example": {
+                                                "name": [
+                                                    "The name field is required."
+                                                ],
+                                                "description": [
+                                                    "The description field is required."
+                                                ],
+                                                "location": [
+                                                    "The location field is required."
+                                                ]
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/bike-shops/{id}": {
+            "get": {
+                "tags": [
+                    "BikeShops"
+                ],
+                "summary": "Get a specific bike shop",
+                "description": "Retrieve a specific bike shop by its ID.",
+                "operationId": "fed546061055984352e64471f1836e36",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of the bike shop to retrieve",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Bike shop retrieved successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "bike_shop": {
+                                            "description": "Bike shop details",
+                                            "properties": {
+                                                "id": {
+                                                    "description": "ID of the bike shop",
+                                                    "type": "integer",
+                                                    "example": "1"
+                                                },
+                                                "name": {
+                                                    "description": "Name of the bike shop",
+                                                    "type": "string",
+                                                    "example": "Sample Bike Shop"
+                                                },
+                                                "description": {
+                                                    "description": "Description of the bike shop",
+                                                    "type": "string",
+                                                    "example": "A description of the bike shop"
+                                                },
+                                                "location": {
+                                                    "description": "Location of the bike shop",
+                                                    "type": "object",
+                                                    "example": {
+                                                        "lat": 123.456,
+                                                        "long": 78.9
+                                                    }
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Bike shop not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Bike shop not found"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "put": {
+                "tags": [
+                    "BikeShops"
+                ],
+                "summary": "Update a bike shop",
+                "description": "Update a bike shop by its ID.",
+                "operationId": "f7298ece67b0b9471b957328cdb4df02",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of the bike shop to update",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "description": "Updated bike shop data",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "example": "Updated Bike Shop"
+                                    },
+                                    "description": {
+                                        "type": "string",
+                                        "example": "Updated description of the bike shop"
+                                    },
+                                    "location": {
+                                        "type": "object",
+                                        "example": {
+                                            "lat": 123.456,
+                                            "long": 78.9
+                                        }
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Bike shop updated successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Shop Updated Success"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Bike shop not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Bike shop not found"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "delete": {
+                "tags": [
+                    "BikeShops"
+                ],
+                "summary": "Delete a bike shop",
+                "description": "Delete a bike shop by its ID.",
+                "operationId": "b4727c564928ae3dd4f1f48b8ce63ca9",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of the bike shop to delete",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Bike shop deleted successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Shop Deleted"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Bike shop not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Bike shop not found"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
         "/api/threads/{id}/comment": {
             "post": {
                 "tags": [
