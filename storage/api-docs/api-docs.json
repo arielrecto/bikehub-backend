@@ -494,6 +494,448 @@
                 ]
             }
         },
+        "/api/bike-hotspots": {
+            "get": {
+                "tags": [
+                    "Bike Hotspots"
+                ],
+                "summary": "Get bike hotspots",
+                "description": "Retrieve a list of bike hotspots with pagination.",
+                "operationId": "479297807dbaa602bb09b65f9813b0b5",
+                "responses": {
+                    "200": {
+                        "description": "List of bike hotspots retrieved successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "bike_hot_spots": {
+                                            "description": "List of bike hotspots",
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "id": {
+                                                        "type": "integer",
+                                                        "example": 1
+                                                    },
+                                                    "name": {
+                                                        "type": "string",
+                                                        "example": "Bike Hotspot 1"
+                                                    },
+                                                    "description": {
+                                                        "type": "string",
+                                                        "example": "Description of Bike Hotspot 1"
+                                                    },
+                                                    "location": {
+                                                        "description": "Location of the bike hotspot",
+                                                        "properties": {
+                                                            "lat": {
+                                                                "type": "number",
+                                                                "format": "float",
+                                                                "example": 123.456
+                                                            },
+                                                            "long": {
+                                                                "type": "number",
+                                                                "format": "float",
+                                                                "example": 78.9
+                                                            }
+                                                        },
+                                                        "type": "object"
+                                                    },
+                                                    "image": {
+                                                        "type": "string",
+                                                        "example": "http://example.com/image1.jpg"
+                                                    },
+                                                    "uploader_id": {
+                                                        "type": "integer",
+                                                        "example": 1
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "Bike Hotspots"
+                ],
+                "summary": "Create a new bike hotspot",
+                "description": "Add a new bike hotspot with provided information.",
+                "operationId": "fea71eea772513054265c062a7f2a63f",
+                "requestBody": {
+                    "description": "Bike hotspot data",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "name",
+                                    "description",
+                                    "location",
+                                    "image"
+                                ],
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "example": "Bike Hotspot Name"
+                                    },
+                                    "description": {
+                                        "type": "string",
+                                        "example": "Description of the bike hotspot"
+                                    },
+                                    "location": {
+                                        "description": "Location of the bike hotspot",
+                                        "type": "object",
+                                        "example": {
+                                            "lat": 123.456,
+                                            "long": 78.9
+                                        }
+                                    },
+                                    "image": {
+                                        "description": "Image file (PNG, JPG) of the bike hotspot",
+                                        "type": "string",
+                                        "format": "binary"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Bike hotspot added successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Bike Hotspot Added Success"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "The given data was invalid."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/bike-hotspots/{id}": {
+            "get": {
+                "tags": [
+                    "Bike Hotspots"
+                ],
+                "summary": "Get a bike hotspot by ID",
+                "description": "Retrieve a bike hotspot by its ID.",
+                "operationId": "cc55546141770253a6ba1bdd28c17019",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of the bike hotspot to retrieve",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Bike hotspot retrieved successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "id": {
+                                            "type": "integer",
+                                            "example": 1
+                                        },
+                                        "name": {
+                                            "type": "string",
+                                            "example": "Bike Hotspot Name"
+                                        },
+                                        "description": {
+                                            "type": "string",
+                                            "example": "Description of the bike hotspot"
+                                        },
+                                        "location": {
+                                            "description": "Location of the bike hotspot",
+                                            "properties": {
+                                                "lat": {
+                                                    "type": "number",
+                                                    "format": "float",
+                                                    "example": 123.456
+                                                },
+                                                "long": {
+                                                    "type": "number",
+                                                    "format": "float",
+                                                    "example": 78.9
+                                                }
+                                            },
+                                            "type": "object"
+                                        },
+                                        "image": {
+                                            "type": "string",
+                                            "example": "http://example.com/image1.jpg"
+                                        },
+                                        "uploader_id": {
+                                            "type": "integer",
+                                            "example": 1
+                                        },
+                                        "uploader": {
+                                            "properties": {
+                                                "id": {
+                                                    "type": "integer",
+                                                    "example": 1
+                                                },
+                                                "name": {
+                                                    "type": "string",
+                                                    "example": "John Doe"
+                                                },
+                                                "email": {
+                                                    "type": "string",
+                                                    "example": "john@example.com"
+                                                },
+                                                "created_at": {
+                                                    "type": "string",
+                                                    "format": "date-time",
+                                                    "example": "2022-03-20T12:00:00Z"
+                                                },
+                                                "updated_at": {
+                                                    "type": "string",
+                                                    "format": "date-time",
+                                                    "example": "2022-03-20T12:00:00Z"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Bike hotspot not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Bike hotspot not found"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Bike Hotspots"
+                ],
+                "summary": "Update a bike hotspot by ID",
+                "description": "Update a bike hotspot by its ID.",
+                "operationId": "e2553f20f5da9fc37e75c628241903e0",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of the bike hotspot to update",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "description": "Bike hotspot data to update",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "name": {
+                                        "description": "Name of the bike hotspot",
+                                        "type": "string"
+                                    },
+                                    "description": {
+                                        "description": "Description of the bike hotspot",
+                                        "type": "string"
+                                    },
+                                    "location": {
+                                        "description": "Location of the bike hotspot",
+                                        "properties": {
+                                            "lat": {
+                                                "description": "Latitude",
+                                                "type": "number",
+                                                "format": "float"
+                                            },
+                                            "long": {
+                                                "description": "Longitude",
+                                                "type": "number",
+                                                "format": "float"
+                                            }
+                                        },
+                                        "type": "object"
+                                    },
+                                    "image": {
+                                        "description": "Image file of the bike hotspot (PNG, JPG, JPEG)",
+                                        "type": "string",
+                                        "format": "binary"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Bike hotspot updated successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Bike hotspot information updated successfully"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Invalid image format"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Bike hotspot not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Bike hotspot not found"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Bike Hotspots"
+                ],
+                "summary": "Delete a bike hotspot by ID",
+                "description": "Delete a bike hotspot by its ID.",
+                "operationId": "8f850de9b7d586628156c558313bdd3f",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of the bike hotspot to delete",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Bike hotspot deleted successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Bike hotspot deleted successfully"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Bike hotspot not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Bike hotspot not found"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/api/bike-shops": {
             "get": {
                 "tags": [

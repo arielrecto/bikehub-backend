@@ -1,14 +1,15 @@
 <?php
 
-use App\Http\Controllers\Api\Auth\LoginController;
-use App\Http\Controllers\Api\Auth\RegisterController;
-use App\Http\Controllers\Api\HomeController;
-use App\Http\Controllers\Api\TagsController;
-use App\Http\Controllers\Api\User\BikeShopController;
-use App\Http\Controllers\Api\User\CommentController;
-use App\Http\Controllers\Api\User\ThreadController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Api\HomeController;
+use App\Http\Controllers\Api\TagsController;
+use App\Http\Controllers\Api\Auth\LoginController;
+use App\Http\Controllers\Api\User\ThreadController;
+use App\Http\Controllers\Api\User\CommentController;
+use App\Http\Controllers\Api\Auth\RegisterController;
+use App\Http\Controllers\Api\User\BikeShopController;
+use App\Http\Controllers\Api\User\BikeHotSpotController;
 
 /*
 |--------------------------------------------------------------------------
@@ -43,6 +44,7 @@ Route::middleware(['auth:sanctum'])->group(function(){
         Route::resource('tags', TagsController::class);
         Route::resource('threads', ThreadController::class)->except(['edit', 'create']);
         Route::resource('bike/shops', BikeShopController::class)->except(['edit', 'create']);
+        Route::resource('bike/hotspot', BikeHotSpotController::class)->except(['edit', 'create']);
     });
     Route::delete('/logout', [LoginController::class, 'logout']);
 });
