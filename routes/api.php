@@ -26,17 +26,16 @@ Route::post('/register', [RegisterController::class, 'store']);
 Route::post('/login', [LoginController::class, 'store']);
 
 
-// Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-//     return $request->user();
-// });
+Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+    return $request->user();
+});
 
-
-Route::middleware(['auth:sanctum'])->group(function(){
+Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('', [HomeController::class, 'index']);
-    Route::prefix('users')->group(function(){
+    Route::prefix('users')->group(function () {
 
 
-        Route::prefix('threads')->group(function(){
+        Route::prefix('threads')->group(function () {
             Route::post('/{thread}/comment', [CommentController::class, 'store']);
             Route::put('/{thread}/comment/{comment}/update', [CommentController::class, 'update']);
             Route::delete('/{thread}/comment/{comment}/delete', [CommentController::class, 'destroy']);
@@ -48,4 +47,3 @@ Route::middleware(['auth:sanctum'])->group(function(){
     });
     Route::delete('/logout', [LoginController::class, 'logout']);
 });
-

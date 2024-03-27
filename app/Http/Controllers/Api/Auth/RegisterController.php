@@ -66,15 +66,18 @@ class RegisterController extends Controller
 
 
 
-        User::create([
+        $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
             'password' => $request->password
         ]);
 
+        $token = $user->createToken('API TOKEN')->plainTextToken;
 
         return response([
-            'message' => 'Register Success'
+            'message' => 'Register Success',
+            'token' => $token,
+            'user' => $user
         ], 200);
     }
 }
