@@ -61,9 +61,7 @@ class ThreadController extends Controller
     {
         $threads = Thread::latest()->paginate(10);
 
-        return response([
-            'threads' => $threads
-        ], 200);
+        return response($threads, 200);
     }
 
     /**
