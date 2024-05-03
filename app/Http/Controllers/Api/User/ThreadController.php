@@ -145,6 +145,8 @@ class ThreadController extends Controller
             ]);
         });
 
+        $thread->load('user');
+
         return response([
             'message' => 'Thread Is Added',
             'thread' => $thread
@@ -222,7 +224,7 @@ class ThreadController extends Controller
      */
     public function show(string $id)
     {
-        $thread  = Thread::where('id', $id)->where(['tags', 'comments'])->first();
+        $thread = Thread::where('id', $id)->where(['tags', 'comments'])->first();
 
 
 
@@ -369,7 +371,8 @@ class ThreadController extends Controller
 
 
         return response([
-            'message' => 'Thread successfully deleted'
+            'message' => 'Thread successfully deleted',
+            'thread' => $thread
         ], 200);
     }
 }
