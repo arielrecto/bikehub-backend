@@ -222,12 +222,8 @@ class ThreadController extends Controller
      *     security={{ "bearerAuth":{} }}
      * )
      */
-    public function show(string $id)
+    public function show(Thread $thread)
     {
-        $thread = Thread::where('id', $id)->where(['tags', 'comments'])->first();
-
-
-
         return response([
             'thread' => $thread
         ], 200);
@@ -297,19 +293,13 @@ class ThreadController extends Controller
      * )
      */
 
-    public function update(Request $request, string $id)
+    public function update(Request $request, Thread $thread)
     {
-
-
-        $thread = Thread::find($id);
-        $thread->update([
-            'title' => $request->title ?? $thread->title,
-            'content' => $request->content ?? $thread->content,
-        ]);
-
+        $thread->update($request->all());
 
         return response([
-            'message' => 'Thread data updated'
+            'message' => 'Thread data updated',
+            'thread' => $thread->fresh()
         ]);
     }
 
