@@ -27,7 +27,6 @@ class CommentController extends Controller
     {
         return $thread->comments()
             ->whereDoesntHave('inReplyTo')
-            ->whereHas('replies')
             ->with('replies')
             ->paginate();
     }
@@ -258,12 +257,9 @@ class CommentController extends Controller
      * )
      */
 
-    public function destroy(string $id)
+    public function destroy(Thread $thread, Comment $comment)
     {
-        $comment = Comment::find($id);
-
         $comment->delete();
-
 
         return response([
             'message' => 'Comment deleted'
