@@ -36,9 +36,10 @@ Route::middleware(['auth:sanctum'])->group(function () {
 
 
         Route::prefix('threads')->group(function () {
-            Route::post('/{thread}/comment', [CommentController::class, 'store']);
-            Route::put('/{thread}/comment/{comment}/update', [CommentController::class, 'update']);
-            Route::delete('/{thread}/comment/{comment}/delete', [CommentController::class, 'destroy']);
+            Route::get('/{thread}/comments', [CommentController::class, 'index']);
+            Route::post('/{thread}/comments', [CommentController::class, 'store']);
+            Route::put('/{thread}/comments/{comment}', [CommentController::class, 'update']);
+            Route::delete('/{thread}/comments/{comment}', [CommentController::class, 'destroy']);
         });
         Route::resource('tags', TagsController::class);
         Route::resource('threads', ThreadController::class)->except(['edit', 'create']);

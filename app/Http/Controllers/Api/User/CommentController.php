@@ -23,9 +23,13 @@ class CommentController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Thread $thread)
     {
-        //
+        return $thread->comments()
+            ->whereDoesntHave('inReplyTo')
+            ->whereHas('replies')
+            ->with('replies')
+            ->paginate();
     }
 
     /**
@@ -93,14 +97,13 @@ class CommentController extends Controller
      */
 
 
-    public function store(Request $request, $id)
+    public function store(Request $request, Thread $thread)
     {
 
         $request->validate([
-            'content' => 'required'
+            'content' => 'required',
+            'in_reply_to' => 'numeric|nullable'
         ]);
-
-        $thread = Thread::find($id);
 
         $user = Auth::user();
 
@@ -108,6 +111,7 @@ class CommentController extends Controller
             'content' => $request->content,
             'thread_id' => $thread->id,
             'user_id' => $user->id,
+            'replied_id' => $request->in_reply_to
         ]);
 
 
