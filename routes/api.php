@@ -10,6 +10,7 @@ use App\Http\Controllers\Api\User\CommentController;
 use App\Http\Controllers\Api\Auth\RegisterController;
 use App\Http\Controllers\Api\User\BikeShopController;
 use App\Http\Controllers\Api\User\BikeHotSpotController;
+use App\Http\Controllers\BikeRouteController;
 
 /*
 |--------------------------------------------------------------------------
@@ -32,19 +33,21 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('', [HomeController::class, 'index']);
+
     Route::prefix('users')->group(function () {
-
-
         Route::prefix('threads')->group(function () {
             Route::get('/{thread}/comments', [CommentController::class, 'index']);
             Route::post('/{thread}/comments', [CommentController::class, 'store']);
             Route::put('/{thread}/comments/{comment}', [CommentController::class, 'update']);
             Route::delete('/{thread}/comments/{comment}', [CommentController::class, 'destroy']);
         });
+
         Route::resource('tags', TagsController::class);
         Route::resource('threads', ThreadController::class)->except(['edit', 'create']);
+        Route::apiResource('bike-routes', BikeRouteController::class);
         Route::resource('bike/shops', BikeShopController::class)->except(['edit', 'create']);
         Route::resource('bike/hotspot', BikeHotSpotController::class)->except(['edit', 'create']);
     });
+
     Route::delete('/logout', [LoginController::class, 'logout']);
 });
