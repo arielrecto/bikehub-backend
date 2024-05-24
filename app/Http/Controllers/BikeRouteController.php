@@ -49,7 +49,7 @@ class BikeRouteController extends Controller
     public function show(BikeRoute $bikeRoute)
     {
         $bikeRoute->load('user');
-        
+
         return response([
             'bike_route' => $bikeRoute
         ], 200);
@@ -60,7 +60,19 @@ class BikeRouteController extends Controller
      */
     public function update(Request $request, BikeRoute $bikeRoute)
     {
-        //
+        $validated = $request->validate([
+            'name' => 'required|max:60',
+            'description' => 'string|max:300|nullable',
+            'waypoints' => 'array'
+        ]);
+
+        $bikeRoute->update($validated);
+
+
+        return response([
+            'message' => 'bike route updated',
+            'bike_route' => $bikeRoute->fresh()
+        ], 200);
     }
 
     /**
@@ -68,6 +80,11 @@ class BikeRouteController extends Controller
      */
     public function destroy(BikeRoute $bikeRoute)
     {
-        //
+        $bikeRoute->delete();
+
+        return response([
+            'message' => 'bike route deleted',
+            'bike_route' => $bikeRoute
+        ]);
     }
 }

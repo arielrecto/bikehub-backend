@@ -18,5 +18,15 @@ class DatabaseSeeder extends Seeder
             'name' => 'USER_1 Throw User',
             'email' => 'throw01@email.com',
         ]);
+
+        User::factory()->create([
+            'name' => 'USER_2 Throw User',
+            'email' => 'throw02@email.com',
+        ]);
+
+        User::factory()->create([
+            'name' => 'ADMIN_1 Admin User',
+            'email' => 'admin1@email.com',
+        ]);
     }
 }
