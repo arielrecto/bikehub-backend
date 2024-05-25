@@ -92,6 +92,8 @@ class LoginController extends Controller
 
         $user = User::where('email', $request->email)->first();
 
+        $user->load('roles');
+
         $token = $user->createToken('API TOKEN')->plainTextToken;
 
 

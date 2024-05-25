@@ -28,7 +28,9 @@ Route::post('/login', [LoginController::class, 'store']);
 
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+    $user = $request->user();
+    $user->load('roles');
+    return $user;
 });
 
 Route::middleware(['auth:sanctum'])->group(function () {

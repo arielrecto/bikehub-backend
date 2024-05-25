@@ -7,7 +7,6 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
-use PhpParser\Node\Expr\FuncCall;
 use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable
@@ -46,19 +45,24 @@ class User extends Authenticatable
     ];
 
 
-    public function profile(){
+    public function profile()
+    {
         return $this->hasOne(Profile::class);
     }
-    public function rides(){
+    public function rides()
+    {
         return $this->hasMany(Ride::class);
     }
-    public function rideBuddies(){
+    public function rideBuddies()
+    {
         return $this->hasMany(RideBuddy::class, 'participant_id');
     }
-    public function hotSpot(){
+    public function hotSpot()
+    {
         return $this->hasMany(BikeHotspot::class, 'uploader_id');
     }
-    public function threads(){
+    public function threads()
+    {
         return $this->hasMany(Thread::class);
     }
 }

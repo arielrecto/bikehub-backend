@@ -57,9 +57,17 @@ class ThreadController extends Controller
      *
      * )
      */
-    public function index()
+    public function index(Request $request)
     {
-        $threads = Thread::latest()->paginate(10);
+        $user = $request->user();
+        $user->with('roles');
+        $query = Thread::query();
+
+        if (!$user->hasRole('admin')) {
+            $query->whereStatus(['approved']);
+        }
+
+        $threads = $query->orderBy('created_at', 'desc')->paginate(10);
 
         return response($threads, 200);
     }

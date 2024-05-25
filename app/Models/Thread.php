@@ -15,7 +15,8 @@ class Thread extends Model
         'content',
         'media',
         'media_type',
-        'user_id'
+        'user_id',
+        'status'
     ];
 
     protected $with = ['user'];
