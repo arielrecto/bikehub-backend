@@ -14,11 +14,19 @@ class BikeShop extends Model
         'name',
         'description',
         'location',
+        'user_id'
+    ];
+
+    protected $casts = [
+        'location' => "array"
     ];
 
 
 
     public function services(){
         return $this->hasMany(BikeShopService::class);
+    }
+    public function user(){
+        return $this->belongsTo(User::class);
     }
 }

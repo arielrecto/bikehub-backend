@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api\User;
 use App\Http\Controllers\Controller;
 use App\Models\BikeShop;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class BikeShopController extends Controller
 {
@@ -144,22 +145,25 @@ class BikeShopController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
+        $data = $request->validate([
             'name' => 'required',
             'description' => 'required',
-            'location' => 'required'
+            'location' => 'array|required'
         ]);
 
 
-        $bikeShop = BikeShop::create([
-            'name' => $request->name,
-            'description' => $request->description,
-            'location' => json_encode($request->location)
-        ]);
+        $user = Auth::user();
+
+        $bikeShop = BikeShop::create(
+            collect(['user_id' => $user->id])
+                ->merge($data)
+                ->toArray()
+        );
 
 
         return response([
-            'message' => 'Bikeshop Added'
+            'message' => 'Bikeshop Added',
+            'bike_store' => $bikeShop
         ], 200);
     }
 
