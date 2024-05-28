@@ -28,8 +28,16 @@ class CommentController extends Controller
         return $thread->comments()
             ->whereDoesntHave('inReplyTo')
             ->with('replies')
+            ->orderBy('created_at', 'desc')
             ->paginate();
     }
+
+
+    public function replies(Thread $thread, Comment $comment)
+    {
+        return $comment->replies()->paginate();
+    }
+
 
     /**
      * Show the form for creating a new resource.

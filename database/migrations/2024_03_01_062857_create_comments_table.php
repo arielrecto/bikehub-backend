@@ -18,7 +18,8 @@ return new class extends Migration
             $table->id();
             $table->longText('content');
             $table->foreignIdFor(Thread::class)->constrained()->onDelete('CASCADE');
-            $table->foreignIdFor(Comment::class, 'replied_id')->nullable();
+            $table->foreignIdFor(Comment::class, 'replied_id')->onDelete('CASCADE')
+                ->nullable();
             $table->foreignIdFor(User::class)->constrained()->onDelete('CASCADE');
             $table->timestamps();
         });
