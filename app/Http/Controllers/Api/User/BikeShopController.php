@@ -71,12 +71,7 @@ class BikeShopController extends Controller
 
     public function index()
     {
-        $shops = BikeShop::get();
-
-
-        return response([
-            'bike_shop' => $shops
-        ], 200);
+        return BikeShop::withCount('services')->paginate(10);
     }
 
     /**
@@ -240,13 +235,12 @@ class BikeShopController extends Controller
      */
     public function show(string $id)
     {
-        $shop = BikeShop::find($id);
+      $bike_store = BikeShop::with('services')->whereId($id)->first();
 
 
-
-        return response([
-            'bike_shop' => $shop
-        ]);
+      return [
+        'bike_store' => $bike_store
+      ];
     }
 
     /**
