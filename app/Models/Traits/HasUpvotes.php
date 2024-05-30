@@ -7,9 +7,20 @@ use App\Models\User;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
+use Illuminate\Http\Request;
 
 trait HasUpvotes
 {
+
+    
+    public function getIsUpVotedByUserAttribute()
+    {
+        if (request()->user()) {
+            return $this->wasUpvotedBy(request()->user());
+        }
+
+        return false;
+    }
 
     public function upvotes(): MorphMany
     {

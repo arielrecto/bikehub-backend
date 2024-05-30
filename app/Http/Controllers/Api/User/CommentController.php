@@ -28,6 +28,7 @@ class CommentController extends Controller
         return $thread->comments()
             ->whereDoesntHave('inReplyTo')
             ->with('replies')
+            ->withCount('upvotes')
             ->orderBy('created_at', 'desc')
             ->paginate();
     }

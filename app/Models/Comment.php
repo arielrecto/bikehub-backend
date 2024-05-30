@@ -10,6 +10,8 @@ class Comment extends Model
 {
     use HasFactory, HasUpvotes;
 
+    protected $appends = ['is_upvoted_by_user'];
+    protected $withCount = ['upvotes'];
 
     protected $fillable = [
         'content',

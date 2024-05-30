@@ -11,6 +11,7 @@ use App\Http\Controllers\Api\Auth\RegisterController;
 use App\Http\Controllers\Api\User\BikeShopController;
 use App\Http\Controllers\Api\User\BikeHotSpotController;
 use App\Http\Controllers\BikeRouteController;
+use App\Http\Controllers\UpvoteController;
 
 /*
 |--------------------------------------------------------------------------
@@ -54,7 +55,8 @@ Route::middleware(['auth:sanctum'])->group(function () {
             );
         });
 
-        Route::resource('tags', TagsController::class);
+        Route::apiResource('tags', TagsController::class);
+        Route::apiResource('upvotes', UpvoteController::class);
         Route::resource('threads', ThreadController::class)->except(['edit', 'create']);
         Route::apiResource('bike-routes', BikeRouteController::class);
         Route::resource('bike/shops', BikeShopController::class)->except(['edit', 'create']);

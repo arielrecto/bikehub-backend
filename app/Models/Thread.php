@@ -21,7 +21,8 @@ class Thread extends Model
     ];
 
     protected $with = ['user'];
-
+    protected $appends = ['is_upvoted_by_user'];
+    protected $withCount = ['upvotes'];
 
     public function user()
     {
