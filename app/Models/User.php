@@ -8,6 +8,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Spatie\Permission\Traits\HasRoles;
+use App\Models\Traits\HasUpvotes;
 
 class User extends Authenticatable
 {
@@ -65,7 +66,13 @@ class User extends Authenticatable
     {
         return $this->hasMany(Thread::class);
     }
-    public function bikeShop(){
+    public function bikeShop()
+    {
         return $this->hasMany(BikeShop::class);
+    }
+
+    public function upvotes()
+    {
+        return $this->hasMany(Upvote::class);
     }
 }

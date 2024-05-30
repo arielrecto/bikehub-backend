@@ -2,12 +2,13 @@
 
 namespace App\Models;
 
+use App\Models\Traits\HasUpvotes;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Comment extends Model
 {
-    use HasFactory;
+    use HasFactory, HasUpvotes;
 
 
     protected $fillable = [
@@ -18,18 +19,22 @@ class Comment extends Model
     ];
 
 
-    public function thread(){
+    public function thread()
+    {
         return $this->belongsTo(Thread::class);
     }
-    public function user(){
+    public function user()
+    {
         return $this->belongsTo(User::class);
     }
 
-    public function inReplyTo(){
+    public function inReplyTo()
+    {
         return $this->belongsTo(Comment::class, 'replied_id');
     }
 
-    public function replies(){
+    public function replies()
+    {
         return $this->hasMany(Comment::class, 'replied_id');
     }
 }

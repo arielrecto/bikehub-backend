@@ -2,12 +2,13 @@
 
 namespace App\Models;
 
+use App\Models\Traits\HasUpvotes;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Thread extends Model
 {
-    use HasFactory;
+    use HasFactory, HasUpvotes;
 
 
     protected $fillable = [
@@ -22,13 +23,16 @@ class Thread extends Model
     protected $with = ['user'];
 
 
-    public function user(){
+    public function user()
+    {
         return $this->belongsTo(User::class);
     }
-    public function comments(){
+    public function comments()
+    {
         return $this->hasMany(Comment::class);
     }
-    public function tags(){
+    public function tags()
+    {
         return $this->hasMany(ThreadTag::class)->with(['tag']);
     }
 }
