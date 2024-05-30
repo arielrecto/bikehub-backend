@@ -44,7 +44,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
                 [CommentController::class, 'replies']
             );
             Route::post('/{thread}/comments', [CommentController::class, 'store']);
-            Route::put(
+            Route::patch(
                 '/{thread}/comments/{comment}',
                 [CommentController::class, 'update']
             );

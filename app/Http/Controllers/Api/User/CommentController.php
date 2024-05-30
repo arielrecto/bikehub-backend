@@ -199,22 +199,17 @@ class CommentController extends Controller
      * )
      */
 
-    public function update(Request $request, string $id)
+    public function update(Request $request, Thread $thread, Comment $comment)
     {
-        $request->validate([
-            'content' => $request->content
+        $validated = $request->validate([
+            'content' => 'string'
         ]);
 
-
-        $comment = Comment::find($id);
-
-        $comment->update([
-            'content' => $request->comment
-        ]);
-
+        $comment->update($validated);
 
         return response([
-            'message' => 'Comment Updated'
+            'message' => 'Comment Updated',
+            'comment' => $comment
         ], 200);
     }
 
