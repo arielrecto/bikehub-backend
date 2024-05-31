@@ -36,6 +36,11 @@
         }
     },
     "scripts": {
+        "start-up": [
+            "@php artisan migrate:refresh --seed",
+            "@php artisan db:seed RoleSeeder",
+            "@php artisan app:assign-admin 3"
+        ],
         "post-autoload-dump": [
             "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",
             "@php artisan package:discover --ansi"
