@@ -27,7 +27,7 @@ class CommentController extends Controller
     {
         return $thread->comments()
             ->whereDoesntHave('inReplyTo')
-            ->with('replies')
+            ->with(['replies', 'replies.user', 'user'])
             ->withCount('upvotes')
             ->orderBy('created_at', 'desc')
             ->paginate();
@@ -121,6 +121,8 @@ class CommentController extends Controller
             'user_id' => $user->id,
             'replied_id' => $request->in_reply_to
         ]);
+
+        $comment->load('user');
 
 
         return response([

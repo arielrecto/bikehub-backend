@@ -72,6 +72,25 @@ class ThreadController extends Controller
         return response($threads, 200);
     }
 
+
+    public function randomThreads(Request $request)
+    {
+        $user = $request->user();
+        $user->with('roles');
+        $query = Thread::query();
+
+        if (!$user->hasRole('admin')) {
+            $query->whereStatus(['approved']);
+        }
+
+        $threads = $query
+            ->withCount('comments')
+            ->inRandomOrder()->get(3);
+
+        return response($threads, 200);
+    }
+
+
     /**
      * Show the form for creating a new resource.
      */
