@@ -22,7 +22,7 @@ class Thread extends Model
 
     protected $with = ['user'];
     protected $appends = ['is_upvoted_by_user'];
-    protected $withCount = ['upvotes'];
+    protected $withCount = ['upvotes', 'comments'];
 
     public function user()
     {

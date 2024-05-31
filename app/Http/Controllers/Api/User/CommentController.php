@@ -125,7 +125,8 @@ class CommentController extends Controller
 
         return response([
             'message' => 'Comment Added',
-            'comment' => $comment
+            'comment' => $comment,
+            'comments_count' => $thread->fresh()->comments_count
         ], 200);
     }
 
@@ -266,7 +267,8 @@ class CommentController extends Controller
         $comment->delete();
 
         return response([
-            'message' => 'Comment deleted'
+            'message' => 'Comment deleted',
+            'comments_count' => $thread->fresh()->comments_count
         ]);
     }
 }
